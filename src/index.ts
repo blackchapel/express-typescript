@@ -1,6 +1,8 @@
-import express from 'express'
-import fs from 'fs'; 
-import dotenv from 'dotenv'
+import express from 'express';
+import database from './configs/database.config';
+import log from './configs/logger.config';
+import fs from 'fs';
+import dotenv from 'dotenv';
 
 // Initailizing env variables
 dotenv.config();
@@ -22,9 +24,10 @@ app.get('/api', (req: express.Request, res: express.Response) => {
         apiVersion: JSON.parse(fs.readFileSync('./package.json').toString())
             .version
     });
-})
+});
 
 // Listening on the port
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    log.info(`Server running on http://localhost:${PORT}`);
+    database();
 });
